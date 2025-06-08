@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Benimle çıkar mısın? ❤️</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%92%96%3C/text%3E%3C/svg%3E">
+  <meta name="description" content="Aşk dolu, romantik bir teklif sayfası. Sürprizlerle dolu bir deneyim!">
+  <meta name="keywords" content="aşk, teklif, romantik, sürpriz, sevgili">
+  <meta property="og:title" content="Aşk Dolu Teklif ❤️">
+  <meta property="og:description" content="Sana özel hazırlanan bu romantik sayfayı keşfet!">
+  <meta property="og:type" content="website">
+  <style>
+    body {
+      background-color: #ffe6e6;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 50px;
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      transition: background-color 0.5s ease;
+    }
+
+    /* Ana kalp animasyonu */
+    .heart {
+      font-size: 5em;
+      color: red;
+      animation: pulse 1.5s ease-in-out infinite;
+      margin-bottom: 30px;
+      display: block;
+      text-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+
+    /* Başlık stilleri */
+    h1 {
+      color: #cc0000;
+      font-size: 3em;
+      margin-top: 20px;
+    }
+
+    /* Paragraf stilleri */
+    p {
+      font-size: 1.3em;
+      color: #333;
+      margin: 20px;
+    }
+
+    /* Buton temel stilleri */
+    button {
+      background-color: #cc0000;
+      color: white;
+      font-size: 1.2em;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(204, 0, 0, 0.2);
+    }
+
+    /* Buton hover efekti */
+    button:hover {
+      background-color: #990000;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(204, 0, 0, 0.3);
+    }
+
+    button:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 10px rgba(204, 0, 0, 0.2);
+    }
+
+    /* Butonların yerleşimi */
+    #buttons {
+      margin-top: 40px;
+      display: flex;
+      justify-content: center;
+      gap: 25%;
+      position: relative;
+      z-index: 1001;
+    }
+
+    /* Hayır butonu özel ayarları */
+    #noBtn {
+      position: relative;
+      z-index: 1001;
+    }
+
+    /* Konfeti canvas'ı */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* Alttan yükselen kalpler */
+    .floating-heart {
+      position: fixed;
+      font-size: 4em;
+      color: red;
+      pointer-events: none;
+      z-index: 1000;
+      animation: floatUp 2s ease-out forwards;
+    }
+
+    /* Kalplerin yükselme animasyonu */
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(0.8);
+        opacity: 1;
+      }
+      50% {
+        transform: translateY(-50vh) scale(1.2);
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(-100vh) scale(0.6);
+        opacity: 0;
+      }
+    }
+
+    /* Yıldız animasyonları */
+    .floating-star {
+      position: fixed;
+      font-size: 2em;
+      color: gold;
+      pointer-events: none;
+      z-index: 998;
+      animation: starFloat 3s ease-in-out forwards;
+    }
+
+    /* Yıldızların animasyon tanımı */
+    @keyframes starFloat {
+      0% {
+        transform: translateY(0) rotate(0deg) scale(0);
+        opacity: 1;
+      }
+      50% {
+        transform: translateY(-30vh) rotate(180deg) scale(1.5);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-60vh) rotate(360deg) scale(0.5);
+        opacity: 0;
+      }
+    }
+
+    /* Çiçek yaprakları animasyonu */
+    .floating-petal {
+      position: fixed;
+      font-size: 2.5em;
+      pointer-events: none;
+      z-index: 997;
+      animation: petalFall 4s ease-in-out forwards;
+    }
+
+    /* Çiçek yapraklarının düşme animasyonu */
+    @keyframes petalFall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+      }
+      50% {
+        transform: translateY(50vh) rotate(180deg);
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Aşk mektubu popup stilleri */
+    #loveMessage {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      z-index: 2000;
+      max-width: 500px;
+      text-align: center;
+      border: 3px solid #cc0000;
+      display: none;
+    }
+
+    /* Mektup içeriği stilleri */
+    #loveMessage h2 {
+      color: #cc0000;
+      margin-bottom: 20px;
+      font-size: 2em;
+    }
+
+    #loveMessage p {
+      color: #333;
+      font-size: 1.1em;
+      line-height: 1.6;
+      margin: 15px 0;
+    }
+
+    /* Mektup kapatma butonu */
+    #closeMessage {
+      background: #cc0000;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+      font-size: 1em;
+    }
+
+    /* Sosyal medya paylaşım butonları */
+    #shareButtons {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 1500;
+    }
+
+    /* Paylaşım butonu stilleri */
+    .share-btn {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: transform 0.3s;
+    }
+
+    .share-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* Instagram butonu */
+    .instagram {
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      color: white;
+    }
+
+    /* Twitter butonu */
+    .twitter {
+      background: #1da1f2;
+      color: white;
+    }
+
+    /* WhatsApp butonu */
+    .whatsapp {
+      background: #25d366;
+      color: white;
+    }
+
+    /* Aşk sayacı stilleri */
+    #loveCounter {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      z-index: 1500;
+    }
+
+    #loveCounter h3 {
+      color: #cc0000;
+      margin: 0 0 10px 0;
+      font-size: 1.2em;
+    }
+
+    #counterValue {
+      color: #333;
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    /* Kalp atışı efekti */
+    .heartbeat {
+      animation: heartbeat 1.5s infinite;
+    }
+
+    @keyframes heartbeat {
+      0% { transform: scale(1); }
+      25% { transform: scale(1.1); }
+      50% { transform: scale(1); }
+      75% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    /* Gökkuşağı efekti arka plan */
+    .rainbow-bg {
+      background: linear-gradient(45deg, 
+        #ff0000, #ff7f00, #ffff00, #00ff00, 
+        #0000ff, #4b0082, #9400d3);
+      background-size: 400% 400%;
+      animation: rainbow 3s ease infinite;
+    }
+
+    @keyframes rainbow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* İlk buluşma planı popup */
+    #datePlan {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, #ffe6e6, #ffb6c1);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      z-index: 2001;
+      max-width: 400px;
+      text-align: center;
+      border: 2px solid #cc0000;
+      display: none;
+    }
+
+    #datePlan h3 {
+      color: #cc0000;
+      margin-bottom: 15px;
+    }
+
+    #datePlan ul {
+      text-align: left;
+      color: #333;
+      padding-left: 20px;
+    }
+
+    /* Mobil cihazlar için özel stiller */
+    @media (max-width: 480px) {
+      body {
+        padding: 15px;
+        height: auto;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .heart {
+        font-size: 3em;
+        margin-bottom: 25px;
+        animation: pulse 1.2s ease-in-out infinite;
+      }
+
+      h1 {
+        font-size: 1.4em;
+        margin: 15px 0;
+        line-height: 1.3;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      }
+
+      p {
+        font-size: 0.9em;
+        margin: 12px;
+        line-height: 1.4;
+        text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.1);
+      }
+
+      #buttons {
+        margin-top: 30px;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+      }
+
+      button {
+        font-size: 0.9em;
+        padding: 10px 20px;
+        min-width: 100px;
+        border-radius: 20px;
+      }
+
+      #loveMessage {
+        width: 85%;
+        padding: 15px;
+        margin: 10px;
+      }
+
+      #loveMessage h2 {
+        font-size: 1.3em;
+        margin-bottom: 10px;
+      }
+
+      #loveMessage p {
+        font-size: 0.9em;
+        margin: 8px 0;
+      }
+    }
+
+    /* Tablet cihazlar için özel stiller */
+    @media (min-width: 481px) and (max-width: 768px) {
+      body {
+        padding: 30px;
+      }
+
+      .heart {
+        font-size: 3.5em;
+        margin-bottom: 25px;
+      }
+
+      h1 {
+        font-size: 1.8em;
+        margin: 15px 0;
+      }
+
+      p {
+        font-size: 1em;
+        margin: 15px;
+      }
+
+      #buttons {
+        margin-top: 30px;
+        gap: 30px;
+      }
+
+      button {
+        font-size: 1em;
+        padding: 10px 20px;
+      }
+    }
+
+    .fade-out {
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+  </style>
+</head>
+<body>
+  <!-- Ana kalp ikonu -->
+  <div class="heart">❤️</div>
+  
+  <!-- Ana başlık -->
+  <h1>Ben seni çok seviyorum...</h1>
+  
+  <!-- Ana mesaj -->
+  <p>Seni gördüğüm ilk andan itibaren hoşlandım.<br>
+  Bana bir şans verebilir misin? 🙏</p>
+
+  <!-- Butonlar bölümü -->
+  <div id="buttons">
+    <button onclick="celebrate()">Evet, Sana bir şans vereceğim!</button>
+    <button id="noBtn">Hayır, üzgünüm...</button>
+  </div>
+
+  <!-- Konfeti için canvas -->
+  <canvas id="confetti"></canvas>
+
+  <!-- Aşk mektubu popup -->
+  <div id="loveMessage">
+    <h2>💌 Kalbimden Sana 💌</h2>
+    <p>Sevgilim, bu anı paylaştığımız için çok mutluyum!</p>
+    <p>Seninle geçireceğimiz her anın harika olacağından eminim. Sen benim hayatımın en güzel parçasısın ve seni her gün daha çok seviyorum.</p>
+    <p>Bu sadece başlangıç... Birlikte güzel anılar yaratacağız! ✨</p>
+    <button id="closeMessage" onclick="closeLoveMessage()">Kapat ❤️</button>
+  </div>
+
+  <!-- İlk buluşma planı popup -->
+  <div id="datePlan">
+    <h3>🌹 İlk Buluşma Planımız 🌹</h3>
+    <ul>
+      <li>🌅 Gün batımında sahil kenarında yürüyüş</li>
+      <li>☕ Sevdiğin kafede kahve içmek</li>
+      <li>🎬 Birlikte romantik film izlemek</li>
+      <li>🍽️ Candlelight dinner</li>
+      <li>⭐ Yıldızları izlemek</li>
+    </ul>
+    <button onclick="closeDatePlan()">Harika! 💕</button>
+  </div>
+
+  <!-- Sosyal medya paylaşım butonları -->
+  <div id="shareButtons">
+    <button class="share-btn instagram" onclick="shareToInstagram()">📸 Instagram</button>
+    <button class="share-btn twitter" onclick="shareToTwitter()">🐦 Twitter</button>
+    <button class="share-btn whatsapp" onclick="shareToWhatsApp()">💬 WhatsApp</button>
+  </div>
+
+  <!-- Aşk sayacı -->
+  <div id="loveCounter">
+    <h3>💕 Seni Ne Kadar Seviyorum</h3>
+    <div id="counterValue">∞ Sonsuz</div>
+  </div>
+
+  <script>
+    // Hayır butonu kaçma davranışı - mouse üzerine gelince kaçar
+    const noBtn = document.getElementById('noBtn');
+    noBtn.addEventListener('mouseenter', () => {
+      const btnWidth = noBtn.offsetWidth;
+      const btnHeight = noBtn.offsetHeight;
+      const padding = 20;
+      const maxX = window.innerWidth - btnWidth - padding;
+      const maxY = window.innerHeight - btnHeight - padding;
+      const randomX = Math.floor(Math.random() * maxX);
+      const randomY = Math.floor(Math.random() * (maxY - 250)) + 150;
+      noBtn.style.position = "fixed";
+      noBtn.style.left = `${randomX}px`;
+      noBtn.style.top = `${randomY}px`;
+    });
+
+    // Konfeti sistemi - renkli partiküller
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    let particles = [];
+
+    // Konfeti partikülleri oluşturur
+    function createConfetti() {
+      particles = [];
+      for (let i = 0; i < 200; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height - canvas.height,
+          r: Math.random() * 6 + 4,
+          d: Math.random() * 10 + 2,
+          color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+          tilt: Math.random() * 10 - 5,
+          tiltAngle: 0
+        });
+      }
+    }
+
+    // Konfeti çizer ve animasyon yapar
+    function drawConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let p of particles) {
+        ctx.beginPath();
+        ctx.lineWidth = p.r;
+        ctx.strokeStyle = p.color;
+        ctx.moveTo(p.x + p.tilt, p.y);
+        ctx.lineTo(p.x, p.y + p.tilt + p.r);
+        ctx.stroke();
+      }
+      updateConfetti();
+    }
+
+    // Konfeti pozisyonlarını günceller
+    function updateConfetti() {
+      for (let p of particles) {
+        p.y += Math.cos(p.d) + 3;
+        p.x += Math.sin(p.d);
+        p.tiltAngle += 0.1;
+        p.tilt = Math.sin(p.tiltAngle) * 10;
+        if (p.y > canvas.height) {
+          p.y = -10;
+          p.x = Math.random() * canvas.width;
+        }
+      }
+    }
+
+    // Alttan yükselen kalpler - farklı kalp emojileri kullanır
+    function createFloatingHearts() {
+      const heartSymbols = ['❤️', '💖', '💕', '💗', '💝', '💘'];
+      
+      return setInterval(() => {
+        const heart = document.createElement('div');
+        heart.className = 'floating-heart';
+        heart.innerHTML = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+        
+        // Rastgele yatay pozisyon
+        heart.style.left = Math.random() * window.innerWidth + 'px';
+        heart.style.bottom = '-50px';
+        
+        // Rastgele boyut varyasyonu
+        const scale = 1.2 + Math.random() * 0.8;
+        heart.style.fontSize = (4 * scale) + 'em';
+        
+        document.body.appendChild(heart);
+        
+        // 2 saniye sonra elementi kaldır
+        setTimeout(() => {
+          if (heart.parentNode) {
+            heart.parentNode.removeChild(heart);
+          }
+        }, 2000);
+      }, 150); // Her 150ms'de bir kalp
+    }
+
+    // Yıldız animasyonu - farklı yönlerden yıldızlar çıkar
+    function createFloatingStars() {
+      const starSymbols = ['⭐', '✨', '🌟', '💫', '⚡'];
+      
+      return setInterval(() => {
+        const star = document.createElement('div');
+        star.className = 'floating-star';
+        star.innerHTML = starSymbols[Math.floor(Math.random() * starSymbols.length)];
+        
+        // Rastgele pozisyon (tüm kenarlardan)
+        const side = Math.floor(Math.random() * 4);
+        switch(side) {
+          case 0: // Üstten
+            star.style.left = Math.random() * window.innerWidth + 'px';
+            star.style.top = '-50px';
+            break;
+          case 1: // Sağdan
+            star.style.right = '-50px';
+            star.style.top = Math.random() * window.innerHeight + 'px';
+            break;
+          case 2: // Soldan
+            star.style.left = '-50px';
+            star.style.top = Math.random() * window.innerHeight + 'px';
+            break;
+          case 3: // Alttan
+            star.style.left = Math.random() * window.innerWidth + 'px';
+            star.style.bottom = '-50px';
+            break;
+        }
+        
+        document.body.appendChild(star);
+        
+        // 3 saniye sonra elementi kaldır
+        setTimeout(() => {
+          if (star.parentNode) {
+            star.parentNode.removeChild(star);
+          }
+        }, 3000);
+      }, 400); // Her 400ms'de bir yıldız
+    }
+
+    // Çiçek yaprakları - üstten düşer
+    function createFloatingPetals() {
+      const petalSymbols = ['🌸', '🌺', '🌷', '🌹', '🌻', '🌼'];
+      const petalColors = ['#ffb6c1', '#ffc0cb', '#ff69b4', '#ff1493', '#da70d6'];
+      
+      return setInterval(() => {
+        const petal = document.createElement('div');
+        petal.className = 'floating-petal';
+        petal.innerHTML = petalSymbols[Math.floor(Math.random() * petalSymbols.length)];
+        petal.style.color = petalColors[Math.floor(Math.random() * petalColors.length)];
+        
+        // Rastgele üst pozisyon
+        petal.style.left = Math.random() * window.innerWidth + 'px';
+        petal.style.top = '-50px';
+        
+        document.body.appendChild(petal);
+        
+        // 4 saniye sonra elementi kaldır
+        setTimeout(() => {
+          if (petal.parentNode) {
+            petal.parentNode.removeChild(petal);
+          }
+        }, 4000);
+      }, 600); // Her 600ms'de bir yaprak
+    }
+
+    // Aşk mektubunu gösterir
+    function showLoveMessage() {
+      document.getElementById('loveMessage').style.display = 'block';
+    }
+
+    // Aşk mektubunu kapatır
+    function closeLoveMessage() {
+      document.getElementById('loveMessage').style.display = 'none';
+      // Mektup kapandıktan sonra buluşma planını göster
+      setTimeout(() => {
+        document.getElementById('datePlan').style.display = 'block';
+      }, 1000);
+    }
+
+    // Buluşma planını kapatır
+    function closeDatePlan() {
+      document.getElementById('datePlan').style.display = 'none';
+      // Plan kapandıktan sonra paylaşım butonlarını göster
+      document.getElementById('shareButtons').style.display = 'flex';
+    }
+
+    // Sosyal medya paylaşım fonksiyonları
+    function shareToInstagram() {
+      // Instagram Stories için URL (gerçek uygulamada çalışır)
+      alert('📸 Instagram Story\'nize paylaşmak için bu sayfanın ekran görüntüsünü alın!');
+    }
+
+    function shareToTwitter() {
+      // Twitter paylaşım URL'i
+      const text = "Aşkımı kabul etti! ❤️ #aşk #mutluluk #sevgili";
+      const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank');
+    }
+
+    function shareToWhatsApp() {
+      // WhatsApp paylaşım URL'i
+      const text = "Aşkımı kabul etti! ❤️❤️❤️ Bu muhteşem anı sizinle paylaşmak istedim!";
+      const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank');
+    }
+
+    // Aşk sayacı animasyonu
+    function startLoveCounter() {
+      const counter = document.getElementById('counterValue');
+      const messages = [
+        '💕 Sonsuz',
+        '❤️ Çok Fazla',
+        '💖 Tahmin Edemezsin',
+        '💗 Kelimelerle Anlatamam',
+        '💝 Her Gün Daha Çok',
+        '💘 İnanılmaz Kadar'
+      ];
+      
+      let index = 0;
+      setInterval(() => {
+        counter.innerHTML = messages[index];
+        index = (index + 1) % messages.length;
+      }, 2000); // Her 2 saniyede değişir
+    }
+
+    // Kalp atışı ses efekti simülasyonu (görsel)
+    function addHeartbeatEffect() {
+      const mainHeart = document.querySelector('.heart');
+      mainHeart.classList.add('heartbeat');
+    }
+
+    // Ana değişkenler
+    let confettiInterval;
+    let bgInterval;
+    let heartsInterval;
+    let starsInterval;
+    let petalsInterval;
+    
+
+    // Ana kutlama fonksiyonu - tüm efektleri başlatır
+    function celebrate() {
+      // Hayır butonunu gizle
+      document.getElementById('noBtn').style.display = 'none';
+
+      // Konfeti başlat
+      createConfetti();
+      confettiInterval = setInterval(drawConfetti, 15);
+
+      // Kalpleri başlat
+      heartsInterval = createFloatingHearts();
+      
+      // Yıldızları başlat
+      starsInterval = createFloatingStars();
+      
+      // Çiçek yapraklarını başlat
+      petalsInterval = createFloatingPetals();
+
+      // Renk paleti - arka plan renkleri
+      const colors = [
+        '#ffb6c1', '#ffc0cb', '#ff69b4', '#ff1493', '#db7093',
+        '#c71585', '#e75480', '#ffa6c9', '#ff6eb4', '#f08080'
+      ];
+
+      let i = 0;
+      // Daha hızlı renk geçişleri
+      bgInterval = setInterval(() => {
+        document.body.style.backgroundColor = colors[i % colors.length];
+        i++;
+      }, 200);
+
+      // Kalp atışı efekti ekle
+      addHeartbeatEffect();
+      
+      // Aşk sayacını başlat
+      startLoveCounter();
+
+      // 5 saniye sonra aşk mektubunu göster
+      setTimeout(() => {
+        showLoveMessage();
+      }, 5000);
+
+      // 10 saniye sonra tüm efektleri durdur
+      setTimeout(() => {
+        clearInterval(confettiInterval);
+        clearInterval(bgInterval);
+        clearInterval(heartsInterval);
+        clearInterval(starsInterval);
+        clearInterval(petalsInterval);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        document.body.style.backgroundColor = '#ffe6e6';
+      }, 10000);
+    }
+
+    // Sayfa yüklendiğinde fade-in efekti
+    document.body.style.opacity = '0';
+    setTimeout(() => {
+      document.body.style.opacity = '1';
+      document.body.style.transition = 'opacity 0.5s';
+    }, 100);
+  </script>
+</body>
+</html> 

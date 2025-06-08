@@ -1,0 +1,258 @@
+<!-- 
+NOT: Telefona atılacak, belki sonradan eklemeler yapılabilir.
+-->
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Özel Mektup 💌</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%92%96%3C/text%3E%3C/svg%3E">
+  <meta name="description" content="Özel bir aşk teklifi sayfası - Romantik bir sürpriz için tıkla!">
+  <meta name="keywords" content="aşk teklifi, romantik, sürpriz, sevgi">
+  <meta property="og:title" content="Özel Aşk Teklifi 💌">
+  <meta property="og:description" content="Senin için hazırladığım özel bir sürpriz var!">
+  <meta property="og:type" content="website">
+  <style>
+    body {
+      background-color: #ff1a1a;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #ff1a1a 0%, #cc0000 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .floating-heart {
+      position: absolute;
+      font-size: 2em;
+      color: #ff6b6b;
+      animation: float 3s ease-in-out infinite;
+      z-index: 1;
+      opacity: 0.8;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+      100% { transform: translateY(0) rotate(0deg); }
+    }
+
+    .letter {
+      width: 90%;
+      max-width: 400px;
+      height: auto;
+      min-height: 250px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      z-index: 2;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      border-radius: 5px;
+      background: linear-gradient(135deg, #ff9999 0%, #ff6666 100%);
+      border: 1px solid #ff4d4d;
+      transform: rotate(-5deg);
+      margin: 20px;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .letter:hover {
+      transform: rotate(-5deg) scale(1.05);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    }
+
+    .letter::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, transparent 48%, #ff4d4d 49%, #ff4d4d 51%, transparent 52%);
+      background-size: 20px 20px;
+      opacity: 0.1;
+      transition: opacity 0.3s ease;
+    }
+
+    .letter::after {
+      content: '💌';
+      font-size: 40px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
+
+    .letter:hover::after {
+      opacity: 0;
+    }
+
+    .letter-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      opacity: 0;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, #ff9999 0%, #ff6666 100%);
+      border-radius: 5px;
+      transform: scale(0.9);
+    }
+
+    .letter:hover .letter-content {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    h1 {
+      color: #cc0000;
+      margin-bottom: 20px;
+      font-size: clamp(20px, 5vw, 24px);
+      text-shadow: 1px 1px 2px rgba(255,255,255,0.3);
+    }
+
+    p {
+      color: #800000;
+      line-height: 1.6;
+      margin: 10px 0;
+      font-size: clamp(14px, 4vw, 16px);
+      text-shadow: 0.5px 0.5px 1px rgba(255,255,255,0.5);
+    }
+
+    .click-me {
+      color: #cc0000;
+      font-weight: bold;
+      margin-top: 20px;
+      animation: pulse 1.5s infinite;
+      text-shadow: 1px 1px 2px rgba(255,255,255,0.3);
+      font-size: clamp(16px, 4vw, 18px);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    .hearts-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: clamp(1.5em, 4vw, 1.8em);
+      animation: floatHeart 3s ease-in-out infinite;
+      opacity: 0;
+    }
+
+    @keyframes floatHeart {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.9; }
+      90% { opacity: 0.9; }
+      100% { transform: translateY(-150px) rotate(20deg); opacity: 0; }
+    }
+
+    /* Mobil cihazlar için özel stiller */
+    @media (max-width: 480px) {
+      .letter {
+        width: 95%;
+        min-height: 200px;
+        margin: 10px;
+        padding: 15px;
+      }
+
+      .letter-content {
+        padding: 15px;
+      }
+
+      h1 {
+        margin-bottom: 15px;
+      }
+
+      p {
+        margin: 8px 0;
+      }
+
+      .click-me {
+        margin-top: 15px;
+      }
+    }
+
+    /* Tablet cihazlar için özel stiller */
+    @media (min-width: 481px) and (max-width: 768px) {
+      .letter {
+        width: 85%;
+        min-height: 220px;
+      }
+    }
+
+    .fade-out {
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts-container"></div>
+
+  <div class="letter" onclick="openLetter()">
+    <div class="letter-content">
+      <h1>Sevgilim,</h1>
+      <p>Bu mektubu açtığında, senin için hazırladığım özel bir sürprizle karşılaşacaksın.</p>
+      <p>Beni dinlemek ister misin?</p>
+      <p class="click-me">Tıkla ve gör 💝</p>
+    </div>
+  </div>
+
+  <script>
+    function openLetter() {
+      document.body.classList.add('fade-out');
+      setTimeout(() => {
+        window.location.href = './love.html';
+      }, 500);
+    }
+
+    function createHearts() {
+      const container = document.querySelector('.hearts-container');
+      const heartSymbols = ['❤️', '💖', '💕', '💗', '💝', '💘'];
+      
+      setInterval(() => {
+        for(let i = 0; i < 2; i++) {
+          const heart = document.createElement('div');
+          heart.className = 'heart';
+          heart.innerHTML = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+          heart.style.left = Math.random() * 100 + '%';
+          heart.style.bottom = '0';
+          container.appendChild(heart);
+          
+          setTimeout(() => {
+            heart.remove();
+          }, 3000);
+        }
+      }, 300);
+    }
+
+    window.onload = createHearts;
+  </script>
+</body>
+</html>
