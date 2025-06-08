@@ -1,13 +1,13 @@
-AŞK TEKLİFİ SAYFASI AÇMA TALİMATLARI
-====================================
+LOVE PROPOSAL PAGE INSTRUCTIONS
+=============================
 
-1. Bu klasördeki tüm dosyaları bilgisayarınıza indirin
-2. index.html dosyasına çift tıklayın
-3. Tarayıcınızda (Chrome, Firefox, Edge vb.) otomatik olarak açılacaktır
+1. Download all files in this folder to your computer
+2. Double-click on index.html
+3. It will automatically open in your browser (Chrome, Firefox, Edge, etc.)
 
-Not: Eğer sayfa düzgün açılmazsa şu adımları izleyin:
-1. index.html dosyasına sağ tıklayın
-2. "Birlikte Aç" seçeneğini seçin
-3. Tarayıcınızı (Chrome, Firefox, Edge vb.) seçin
+Note: If the page doesn't open properly, follow these steps:
+1. Right-click on index.html
+2. Select "Open with"
+3. Choose your browser (Chrome, Firefox, Edge, etc.)
 
-Önemli: Her iki dosyanın da (index.html ve love.html) aynı klasörde olması gerekiyor! 
+Important: Both files (index.html and love.html) must be in the same folder! 
